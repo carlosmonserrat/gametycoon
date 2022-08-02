@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import CenterMarginLayout from "../../layout/centermarginlayout";
+import Room from './room.svg'
 import CSS from 'csstype';
 
 const StartView = () => {
@@ -33,12 +34,13 @@ const StartView = () => {
 
     const bar: CSS.Properties = {
         'width': '100%',
-        'backgroundColor': '#ddd'
+        'backgroundColor': '#D9D9D9'
     }
 
     const barFill = {
-        'width': (count  ) + '%',
-        'backgroundColor': '#04AA6D',
+        'width': (count) + '%',
+        'height': '12px',
+        'backgroundColor': '#00FF66',
         'color': ' white',
         'padding ': '10px',
         'textAlign': 'right' as 'right',
@@ -47,17 +49,16 @@ const StartView = () => {
 
     return (
         <CenterMarginLayout>
-            <h1>Hello</h1>
-            <button onClick={startCounter}>start</button>
+            <button onClick={startCounter}>run</button>
             <button onClick={reset}>reset</button>
             <button onClick={pause}>||</button>
             <span ref={displayTime}>{count}</span>
+            <img src={Room} alt=""/>
             <div style={bar}>
-                <div style={barFill}>  {(count ) + '%'}  </div>
+                <div style={barFill}></div>
             </div>
         </CenterMarginLayout>
     )
-
 }
 
 export default StartView
