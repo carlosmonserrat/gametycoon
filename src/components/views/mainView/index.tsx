@@ -17,7 +17,7 @@ const StartView = () => {
         }
         setTimer(setTimeout(() => setCount(count + 1), 1000) as unknown as number)
     }
-
+ 
     const pause = () => {
         clearTimeout(timer)
         setPaused(true)
