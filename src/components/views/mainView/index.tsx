@@ -1,44 +1,54 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import CenterMarginLayout from "../../layout/centermarginlayout";
 import Room from './room.svg'
 import TimeBar from "../../core/timebar";
+import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
+import {
+    incrementCounter,
+    pauseTime,
+    resetCounter,
+    resumeTime,
+    setGlobalTimeOutId
+} from '../../../redux/slices/TimeSlice'
 
 const StartView = () => {
-    const [count, setCount] = useState(0)
-    const [paused, setPaused] = useState(true)
-    const [timer, setTimer] = useState(0)
+    const counter = useAppSelector((state) => state.timer.counter)
+    const timeInterval = useAppSelector((state) => state.timer.timeInterval)
+    const isPaused = useAppSelector((state) => state.timer.isPaused)
+    const globalTimeOutId = useAppSelector((state) => state.timer.globalTimeOutId)
+    const dispatch = useAppDispatch()
 
     const startCounter = () => {
-        setPaused(false)
-        if (count > 100) {
-            setCount(0)
+        dispatch(resumeTime())
+        clearTimeout(globalTimeOutId)
+        if (counter > 100) {
+            dispatch(resetCounter())
         }
-        setTimer(setTimeout(() => setCount(count + 1), 1000) as unknown as number)
+        dispatch(setGlobalTimeOutId(setTimeout(() => dispatch(incrementCounter()), timeInterval) as unknown as number))
     }
 
     const pause = () => {
-        clearTimeout(timer)
-        setPaused(true)
+        clearTimeout(globalTimeOutId)
+        dispatch(pauseTime())
     }
 
     const reset = () => {
-        clearTimeout(timer)
-        setCount(0);
+        clearTimeout(globalTimeOutId)
+        dispatch(resetCounter())
     }
 
     useEffect(() => {
-        if (!paused) startCounter()
-    }, [count, paused])
-
+        if (!isPaused) startCounter()
+    }, [counter])
 
     return (
         <CenterMarginLayout>
-            <button onClick={startCounter}>SELECT JOB</button>
+            <button onClick={startCounter}>start game</button>
             <button onClick={reset}>reset</button>
             <button onClick={pause}>||</button>
-            <span>{count}</span>
+            <span>{counter}</span>
             <img src={Room} alt=""/>
-            <TimeBar count={count}/>
+            <TimeBar count={counter}/>
         </CenterMarginLayout>
     )
 }

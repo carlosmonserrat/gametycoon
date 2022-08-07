@@ -1,6 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
-import type {RootState} from '../../redux/Store'
+import {createSlice} from '@reduxjs/toolkit'
 
 interface TimerState {
     counter: number
@@ -11,14 +10,13 @@ interface TimerState {
 
 const initialState: TimerState = {
     counter: 0,
-    isPaused: false,
+    isPaused: true,
     globalTimeOutId: 0,
     timeInterval: 1000
 }
 
 export const timerSlice = createSlice({
     name: 'timer',
-    // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
         incrementCounter: (state) => {
@@ -27,13 +25,27 @@ export const timerSlice = createSlice({
         pauseTime: (state) => {
             state.isPaused = true
         },
+        resumeTime: (state) => {
+            state.isPaused = false
+        },
         setGlobalTimeOutId: (state, action: PayloadAction<number>) => {
             state.globalTimeOutId = action.payload
         },
+        resetCounter: (state) => {
+            state.counter = 0
+        },
         setTimeInterval: (state, action: PayloadAction<number>) => {
-            state.globalTimeOutId = action.payload
+            state.timeInterval = action.payload
         },
     },
 })
 
-export const {incrementCounter, pauseTime, setGlobalTimeOutId, setTimeInterval} = timerSlice.actions
+export const {
+    incrementCounter,
+    pauseTime,
+    setGlobalTimeOutId,
+    setTimeInterval,
+    resetCounter,
+    resumeTime
+} = timerSlice.actions
+export default timerSlice.reducer
