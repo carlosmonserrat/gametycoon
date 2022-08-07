@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import CenterMarginLayout from "../../layout/centermarginlayout";
 import Room from './room.svg'
+import BalanceSheet from './balanceSheet.svg'
 import TimeBar from "../../core/timebar";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
 import {
@@ -10,6 +11,7 @@ import {
     resumeTime,
     setGlobalTimeOutId
 } from '../../../redux/slices/TimeSlice'
+import CSS from "csstype";
 
 const StartView = () => {
     const counter = useAppSelector((state) => state.timer.counter)
@@ -41,14 +43,29 @@ const StartView = () => {
         if (!isPaused) startCounter()
     }, [counter])
 
+    const buttonStart: CSS.Properties = {
+        'cursor': 'pointer',
+        'fontSize': '16px',
+        'fontWeight': '400',
+        'position': 'absolute',
+        'right': '0',
+        'border': 'none',
+        'color': 'white',
+        'backgroundColor': 'rgba(0,0,0,0)'
+    }
+
     return (
         <CenterMarginLayout>
-            <button onClick={startCounter}>start game</button>
-            <button onClick={reset}>reset</button>
-            <button onClick={pause}>||</button>
-            <span>{counter}</span>
-            <img src={Room} alt=""/>
-            <TimeBar count={counter}/>
+            {!isPaused ? <></> : <button style={buttonStart} onClick={startCounter}>Start new game</button>}
+            {/*<button onClick={reset}>reset</button>*/}
+            {/*<button onClick={pause}>||</button>*/}
+
+            <div style={{'textAlign': 'center'}}>
+                <img src={Room} alt=""/>
+            </div>
+            <img src={BalanceSheet} alt=""/>
+            <span style={{'color': 'white'}}>{counter}</span>
+            {isPaused ? <></> : <TimeBar count={counter}/>}
         </CenterMarginLayout>
     )
 }
