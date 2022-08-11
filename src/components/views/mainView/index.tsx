@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import CenterMarginLayout from "../../layout/centermarginlayout";
-import Room from './room.svg'
 
 import TimeBar from "../../core/timebar";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
@@ -13,6 +12,9 @@ import {
 } from '../../../redux/slices/TimeSlice'
 import CSS from "csstype";
 import BalanceSheet from "../../core/balancesheet";
+import BasicComputer from "../../core/computers/basic";
+import BasementRoom from "../../core/rooms/basement";
+import TableObject from "../../core/objects/table";
 
 const StartView = () => {
     const counter = useAppSelector((state) => state.timer.counter)
@@ -55,7 +57,6 @@ const StartView = () => {
         'backgroundColor': 'rgba(0,0,0,0)'
     }
 
-
     return (
         <CenterMarginLayout>
             {!isPaused ? <></> : <button style={buttonStart} onClick={startCounter}>Start new game</button>}
@@ -63,7 +64,12 @@ const StartView = () => {
             {/*<button onClick={pause}>||</button>*/}
             <div style={{'color': 'white'}}>Days: {counter}</div>
             <div style={{'textAlign': 'center'}}>
-                <img src={Room} alt=""/>
+
+                <BasementRoom>
+                    <div><BasicComputer/></div>
+                    <TableObject/>
+                </BasementRoom>
+
             </div>
             <BalanceSheet current={10} expensesMonth={-1000} nextMonthMoney={-990}/>
             {isPaused ? <></> : <TimeBar count={counter}/>}
