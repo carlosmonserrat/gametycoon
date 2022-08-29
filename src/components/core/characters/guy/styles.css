@@ -1,0 +1,64 @@
+:root {
+    --pixel-size: 2.2;
+    --face-left:calc(-50px * var(--pixel-size));
+    --face-right:calc(-0px * var(--pixel-size));
+}
+
+.character {
+    animation: moveForward 1s linear;
+    width: calc(31px * var(--pixel-size));
+    height: calc(50px * var(--pixel-size));
+    overflow: hidden;
+    position: relative;
+    transition: 1s linear;
+    left: 0;
+    top: -5px;
+}
+
+.characterRender {
+    image-rendering: pixelated;
+    width: calc(128px * var(--pixel-size));
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.stand-right {
+    top: var(--face-left);
+}
+
+.stand-left {
+    top: var(--face-right);
+}
+
+.move-right {
+    animation: moveSpriteSheet 1s steps(4) infinite;
+    top: calc(-0px * var(--pixel-size));
+}
+
+.move-left {
+    animation: moveSpriteSheet 1s steps(4) infinite;
+    top: calc(-50px * var(--pixel-size));
+}
+
+.work {
+    animation: moveSpriteSheet 1s steps(4) infinite;
+    top: calc(-100px * var(--pixel-size));
+}
+
+.work-coffe {
+    animation: moveSpriteSheet 8s steps(4) infinite;
+    top: calc(-150px * var(--pixel-size));
+}
+
+
+@keyframes moveSpriteSheet {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+

@@ -12,9 +12,12 @@ import {
 } from '../../../redux/slices/TimeSlice'
 import CSS from "csstype";
 import BalanceSheet from "../../core/balancesheet";
-import BasicComputer from "../../core/computers/basic";
+import BasicComputer from "../../core/computer";
 import BasementRoom from "../../core/rooms/basement";
-import TableObject from "../../core/objects/table";
+import TableObject from "../../core/table";
+import BasicChair from "../../core/chairs/basic";
+import Notes from "../../core/notes";
+import Guy from "../../core/characters/guy";
 
 const StartView = () => {
     const counter = useAppSelector((state) => state.timer.counter)
@@ -57,6 +60,8 @@ const StartView = () => {
         'backgroundColor': 'rgba(0,0,0,0)'
     }
 
+
+
     return (
         <CenterMarginLayout>
             {!isPaused ? <></> : <button style={buttonStart} onClick={startCounter}>Start new game</button>}
@@ -65,10 +70,17 @@ const StartView = () => {
             <div style={{'color': 'white'}}>Days: {counter}</div>
             <div style={{'textAlign': 'center'}}>
 
-                <BasementRoom>
-                    <div><BasicComputer/></div>
-                    <TableObject/>
-                </BasementRoom>
+                  <BasementRoom
+                      desktop={
+
+                          <TableObject
+                              computer={ <BasicComputer/> }
+
+                              notes={<Notes/>}/>
+
+                      }
+                      character={<Guy/>}
+                  />
 
             </div>
             <BalanceSheet current={10} expensesMonth={-1000} nextMonthMoney={-990}/>

@@ -1,0 +1,12 @@
+.computer-click {
+    cursor: pointer;
+    box-shadow: inset 0px 0px 10px  0px #8bff3a;
+    transform: translate3d(0, 0, 22200px);
+    width: 50px;
+    height: 40px;
+    transition:0.5s ;
+}
+
+.computer-click:hover{
+    box-shadow: inset 0px 0px 0px 0px #f00;
+}
